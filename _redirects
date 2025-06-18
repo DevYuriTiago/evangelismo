@@ -1,14 +1,11 @@
 # Redirect rules for Netlify
 
+# Main evangelismo routes
+/evangelismo /evangelismo_v2.html 301
+/evangelismo/ /evangelismo_v2.html 301
+
 # Redirect old version to new version
 /evangelismo.html /evangelismo_v2.html 301
 
-# Fallback for SPA (if needed in future)
-# /* /index.html 200
-
-# Force HTTPS
-http://evangelismo.netlify.app/* https://evangelismo.netlify.app/:splat 301!
-
-# Custom domain redirects (uncomment when you have custom domain)
-# http://yourdomain.com/* https://yourdomain.com/:splat 301!
-# https://www.yourdomain.com/* https://yourdomain.com/:splat 301!
+# Force HTTPS (will be added automatically by Netlify)
+# http://site.netlify.app/* https://site.netlify.app/:splat 301!

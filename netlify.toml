@@ -6,11 +6,16 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Simple redirects without conditions
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  conditions = {Role = ["admin"]}
+  from = "/evangelismo"
+  to = "/evangelismo_v2.html"
+  status = 301
+
+[[redirects]]
+  from = "/evangelismo/"
+  to = "/evangelismo_v2.html"
+  status = 301
 
 # Headers for security
 [[headers]]
