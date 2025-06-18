@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uma Decisão que Muda Tudo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+            font-size: 20px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.3; }
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header h1 {
+            color: white;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            font-weight: 300;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 20px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideUp 0.8s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.4s; }
+        .card:nth-child(4) { animation-delay: 0.6s; }
+
+        .card-enter {
+            animation: cardSlideIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .card-exit {
+            animation: cardSlideOut 0.5s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+        }
+
+        @keyframes cardSlideIn {
+            0% {
+                transform: translateX(100%) scale(0.8) rotateY(45deg);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0) scale(1) rotateY(0deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes cardSlideOut {
+            0% {
+                transform: translateX(0) scale(1) rotateY(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-100%) scale(0.8) rotateY(-45deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.8s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .question {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .question h2 {
+            color: #333;
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .question p {
+            color: #666;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .verse {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            font-style: italic;
+            text-align: center;
+            margin: 15px 0;
+            font-size: clamp(0.85rem, 3vw, 0.95rem);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verse::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 60px;
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .option-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 20px;
+            border-radius: 50px;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transform: translateY(0);
+        }
+
+        .option-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .option-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .option-btn.no {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        }
+
+        .input-group {
+            margin: 15px 0;
+            width: 100%;
+        }
+
+        .input-group label {
+            display: block;
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .congratulations {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border-radius: 20px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .congratulations::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🎉</text></svg>') repeat;
+            opacity: 0.1;
+            animation: confetti 3s linear infinite;
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        .congratulations h2 {
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
+            margin-bottom: 15px;
+            animation: bounce 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-5px); }
+        }
+
+        .congratulations .icon {
+            font-size: clamp(2rem, 8vw, 3rem);
+            margin-bottom: 15px;
+            display: block;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .next-steps {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .next-steps h3 {
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+            margin-bottom: 15px;
+        }
+
+        .next-steps ul {
+            text-align: left;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .next-steps li {
+            margin: 8px 0;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            display: flex;
+            align-items: center;
+        }
+
+        .next-steps li::before {
+            content: '✓';
+            margin-right: 10px;
+            color: #00b894;
+            font-weight: bold;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .phone-optional {
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            border: none;
+            color: white;
+            margin-top: 15px;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .phone-optional input {
+            background: rgba(255,255,255,0.9);
+        }
+
+        .phone-optional label {
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .phone-note {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.8);
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .user-name {
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0;
+            }
+            
+            .card {
+                margin: 5px;
+                padding: 25px 15px;
+                border-radius: 15px;
+            }
+            
+            .options {
+                gap: 10px;
+            }
+            
+            .option-btn {
+                padding: 14px 16px;
+            }
+        }
+
+        .success-animation {
+            animation: successPulse 1s ease-in-out;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .loading-dots {
+            display: inline-block;
+            animation: loadingDots 1.5s infinite;
+        }
+
+        @keyframes loadingDots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <i class="fas fa-heart floating-heart" style="top: 10%; left: 10%;"></i>
+        <i class="fas fa-star floating-heart" style="top: 20%; right: 15%; animation-delay: 1s;"></i>
+        <i class="fas fa-dove floating-heart" style="top: 60%; left: 5%; animation-delay: 2s;"></i>
+        <i class="fas fa-cross floating-heart" style="top: 70%; right: 10%; animation-delay: 3s;"></i>
+        <i class="fas fa-heart floating-heart" style="top: 40%; right: 20%; animation-delay: 4s;"></i>
+        <i class="fas fa-praying-hands floating-heart" style="top: 80%; left: 15%; animation-delay: 5s;"></i>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>✨ Uma Decisão que Muda Tudo ✨</h1>
+            <p class="subtitle">Descubra o amor incondicional de Deus</p>
+        </div>
+
+        <div class="content">
+            <!-- Card 1: Nome -->
+            <div class="card" id="card1">
+                <div class="question">
+                    <h2>👋 Olá! Seja bem-vindo(a)!</h2>
+                    <p>Antes de começarmos essa conversa especial, gostaríamos de conhecer você melhor.</p>
+                </div>
+                <div class="input-group">
+                    <label for="userName">
+                        <i class="fas fa-user"></i> Qual é o seu primeiro nome?
+                    </label>
+                    <input type="text" id="userName" placeholder="Digite seu primeiro nome" required>
+                </div>
+                <div class="options">
+                    <button class="option-btn" onclick="startJourney()">
+                        <i class="fas fa-arrow-right"></i> Começar conversa
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 2: Sentido da vida -->
+            <div class="card hidden" id="card2">
+                <div class="question">
+                    <h2>🤔 <span class="user-name"></span>, você já parou para pensar sobre o sentido da vida?</h2>
+                    <p>Muitas pessoas vivem suas vidas sem nunca questionar o propósito real de sua existência...</p>
+                    <div class="verse">
+                        "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna." - João 3:16
+                    </div>
+                </div>
+                <div class="options">
+                    <button class="option-btn" onclick="nextCard(3)">
+                        <i class="fas fa-arrow-right"></i> Continuar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 3: Vazio interior -->
+            <div class="card hidden" id="card3">
+                <div class="question">
+                    <h2>💭 <span class="user-name"></span>, você já sentiu um vazio dentro de você?</h2>
+                    <p>Aquela sensação de que algo está faltando, mesmo quando tudo parece estar bem na vida...</p>                    <div class="verse">
+                        "Porque Ele satisfaz a alma sedenta e enche de bens a alma faminta." - Salmos 107:9
+                    </div>
+                </div>
+                <div class="options">
+                    <button class="option-btn" onclick="nextCard(4)">
+                        <i class="fas fa-arrow-right"></i> Continuar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 4: Problema do pecado -->
+            <div class="card hidden" id="card4">
+                <div class="question">
+                    <h2>⚖️ <span class="user-name"></span>, sabia que todos nós temos um problema?</h2>
+                    <p>A Bíblia ensina que todos pecaram e se afastaram de Deus. Mas há uma boa notícia!</p>
+                    <div class="verse">
+                        "Porque todos pecaram e destituídos estão da glória de Deus." - Romanos 3:23
+                    </div>
+                </div>
+                <div class="options">
+                    <button class="option-btn" onclick="nextCard(5)">
+                        <i class="fas fa-arrow-right"></i> Continuar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 5: Solução de Deus -->
+            <div class="card hidden" id="card5">
+                <div class="question">
+                    <h2>✨ A solução de Deus para nossa vida</h2>
+                    <p><span class="user-name"></span>, Deus nos ama tanto que enviou Jesus para morrer em nosso lugar!</p>
+                    <div class="verse">
+                        "Mas Deus prova o seu amor para conosco, em que Cristo morreu por nós, sendo nós ainda pecadores." - Romanos 5:8
+                    </div>
+                </div>
+                <div class="options">
+                    <button class="option-btn" onclick="nextCard(6)">
+                        <i class="fas fa-arrow-right"></i> Continuar
+                    </button>
+                </div>
+            </div>            <!-- Card 6: Vida eterna -->
+            <div class="card hidden" id="card6">
+                <div class="question">
+                    <h2>🎁 <span class="user-name"></span>, você pode ter vida eterna!</h2>
+                    <p>A vida eterna não é apenas duração, mas qualidade! Deus quer dar uma vida abundante aqui e agora!</p>
+                    <div class="verse">
+                        "O ladrão não vem senão a roubar, a matar, e a destruir; eu vim para que tenham vida, e a tenham com abundância." - João 10:10
+                    </div>
+                </div>
+                <div class="options">
+                    <button class="option-btn" onclick="nextCard(7)">
+                        <i class="fas fa-arrow-right"></i> Continuar
+                    </button>
+                </div>
+            </div>            <!-- Card 7: Como receber -->
+            <div class="card hidden" id="card7">
+                <div class="question">
+                    <h2>🙏 Como receber este presente?</h2>
+                    <p><span class="user-name"></span>, você precisa crer no coração e confessar com a boca! A fé vem pela palavra de Deus!</p>
+                    <div class="verse">
+                        "De sorte que a fé é pelo ouvir, e o ouvir pela palavra de Deus." - Romanos 10:17
+                    </div>
+                </div>
+                <div class="options">
+                    <button class="option-btn" onclick="nextCard(8)">
+                        <i class="fas fa-arrow-right"></i> Continuar
+                    </button>
+                </div>
+            </div>            <!-- Card 8: Decisão -->
+            <div class="card hidden" id="card8">
+                <div class="question">
+                    <h2>✝️ <span class="user-name"></span>, você gostaria de aceitar Jesus?</h2>
+                    <p>Esta é a decisão mais importante da sua vida. Confesse Jesus como seu Senhor e Salvador pessoal!</p>
+                    <div class="verse">
+                        "Mas, a todos quantos o receberam, deu-lhes o poder de serem feitos filhos de Deus, aos que creem no seu nome." - João 1:12
+                    </div>
+                </div>
+                <div class="options">
+                    <button class="option-btn" onclick="acceptJesus()">
+                        <i class="fas fa-hands-praying"></i> Sim, aceito Jesus como meu Senhor!
+                    </button>
+                    <button class="option-btn no" onclick="showRespect()">
+                        <i class="fas fa-clock"></i> Preciso pensar mais
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 9: Parabéns personalizado -->
+            <div class="card hidden" id="card9">
+                <div class="congratulations">
+                    <i class="fas fa-star icon"></i>
+                    <h2>🎉 Parabéns, <span class="user-name"></span>! 🎉</h2>
+                    <p>Você tomou a decisão mais importante da sua vida! Jesus está celebrando no céu por você!</p>
+                    <div class="verse">
+                        "Assim, digo-vos, há alegria diante dos anjos de Deus por um pecador que se arrepende." - Lucas 15:10
+                    </div>
+                </div>
+                <div class="options">
+                    <button class="option-btn" onclick="nextCard(10)">
+                        <i class="fas fa-arrow-right"></i> Continuar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 10: Captura de telefone -->
+            <div class="card hidden" id="card10">
+                <div class="question">
+                    <h2>📞 <span class="user-name"></span>, queremos te apoiar!</h2>
+                    <p>Se você quiser, compartilhe seu telefone para receber apoio, oração e materiais que vão te ajudar nessa nova jornada!</p>
+                </div>
+
+                <div class="input-group phone-optional">
+                    <label for="phone">
+                        <i class="fas fa-phone"></i> Telefone (Opcional)
+                    </label>
+                    <input type="tel" id="phone" placeholder="(00) 00000-0000">
+                    <div class="phone-note">
+                        💡 Seu telefone será usado apenas para apoio espiritual e oração
+                    </div>
+                </div>
+
+                <div class="options">
+                    <button class="option-btn" onclick="finalizePage()">
+                        <i class="fas fa-check-circle"></i> Finalizar
+                    </button>
+                    <button class="option-btn" onclick="skipPhone()" style="background: #6c757d; margin-top: 10px;">
+                        <i class="fas fa-forward"></i> Pular (não compartilhar telefone)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card Final -->
+            <div class="card hidden" id="card-final">
+                <div class="congratulations success-animation">
+                    <i class="fas fa-crown icon"></i>
+                    <h2>🙏 <span class="user-name"></span>, bem-vindo(a) à família de Deus!</h2>
+                    <p>Agora você é filho(a) de Deus! Sua nova vida em Cristo começou hoje!</p>
+                </div>                <div class="next-steps">
+                    <h3>🌟 Seus próximos passos:</h3>
+                    <ul>
+                        <li>Ore e converse com Deus diariamente</li>
+                        <li>Leia a Bíblia para conhecê-Lo melhor</li>
+                        <li>Encontre uma igreja evangélica para congregar</li>
+                        <li>Declare as promessas de Deus sobre sua vida</li>
+                        <li>Compartilhe sua fé com outros</li>
+                        <li>Viva pela fé na Palavra de Deus</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Mensagem de respeito -->
+            <div class="card hidden" id="respect">
+                <div class="question">
+                    <h2>🕊️ <span class="user-name"></span>, respeitamos sua decisão</h2>
+                    <p>Sabemos que cada pessoa tem seu tempo. Deus te ama independentemente de qualquer coisa, e estaremos aqui quando você quiser conversar.</p>
+                    <div class="verse">
+                        "O Senhor não retarda a sua promessa, ainda que alguns a têm por tardia; mas é longânimo para convosco, não querendo que alguns se percam, senão que todos venham a arrepender-se." - 2 Pedro 3:9
+                    </div>
+                    <div class="options">
+                        <button class="option-btn" onclick="restartJourney()">
+                            <i class="fas fa-redo"></i> Recomeçar conversa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variável global para armazenar o nome do usuário
+        let userName = '';
+        let userData = {};
+
+        // Configuração do Supabase (substitua pelos seus dados)
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+        function startJourney() {
+            const nameInput = document.getElementById('userName');
+            userName = nameInput.value.trim();
+            
+            if (!userName) {
+                alert('Por favor, digite seu nome para continuar.');
+                nameInput.focus();
+                return;
+            }
+
+            // Atualiza todos os elementos com o nome do usuário
+            updateUserName();
+            
+            // Salva os dados iniciais
+            userData = {
+                name: userName,
+                started_at: new Date().toISOString(),
+                step: 'started'
+            };
+
+            nextCard(2);
+        }
+
+        function updateUserName() {
+            const userNameElements = document.querySelectorAll('.user-name');
+            userNameElements.forEach(element => {
+                element.textContent = userName;
+            });
+        }
+
+        function nextCard(cardNumber) {
+            const currentCard = document.querySelector('.card:not(.hidden)');
+            
+            // Adiciona animação de saída
+            currentCard.classList.add('card-exit');
+            
+            setTimeout(() => {
+                // Esconde o card atual
+                currentCard.classList.add('hidden');
+                currentCard.classList.remove('card-exit');
+                
+                // Mostra o próximo card
+                const nextCard = document.getElementById(`card${cardNumber}`);
+                nextCard.classList.remove('hidden');
+                nextCard.classList.add('card-enter');
+                
+                // Remove a classe de entrada após a animação
+                setTimeout(() => {
+                    nextCard.classList.remove('card-enter');
+                }, 700);
+                
+                // Atualiza o progresso
+                userData.step = `card${cardNumber}`;
+                
+                // Scroll suave para o topo
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 500);
+        }
+
+        function acceptJesus() {
+            userData.decision = 'accepted';
+            userData.accepted_at = new Date().toISOString();
+            
+            const currentCard = document.querySelector('.card:not(.hidden)');
+            currentCard.classList.add('card-exit');
+            
+            setTimeout(() => {
+                currentCard.classList.add('hidden');
+                currentCard.classList.remove('card-exit');
+                
+                const congratsCard = document.getElementById('card9');
+                congratsCard.classList.remove('hidden');
+                congratsCard.classList.add('card-enter');
+                
+                setTimeout(() => {
+                    congratsCard.classList.remove('card-enter');
+                }, 700);
+                
+                // Adiciona confetes
+                createConfetti();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 500);
+        }
+
+        function finalizePage() {
+            const phone = document.getElementById('phone').value.trim();
+            
+            userData.phone = phone;
+            userData.completed_at = new Date().toISOString();
+            userData.step = 'completed';
+            
+            // Aqui você salvaria no Supabase
+            saveToSupabase(userData);
+            
+            const currentCard = document.querySelector('.card:not(.hidden)');
+            currentCard.classList.add('card-exit');
+            
+            setTimeout(() => {
+                currentCard.classList.add('hidden');
+                currentCard.classList.remove('card-exit');
+                
+                const finalCard = document.getElementById('card-final');
+                finalCard.classList.remove('hidden');
+                finalCard.classList.add('card-enter');
+                
+                setTimeout(() => {
+                    finalCard.classList.remove('card-enter');
+                }, 700);
+                
+                // Mais confetes para celebração final
+                createConfetti();
+                setTimeout(() => createConfetti(), 1000);
+                setTimeout(() => createConfetti(), 2000);
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 500);
+        }
+
+        function skipPhone() {
+            userData.phone = null;
+            userData.completed_at = new Date().toISOString();
+            userData.step = 'completed_no_phone';
+            
+            // Aqui você salvaria no Supabase
+            saveToSupabase(userData);
+            
+            const currentCard = document.querySelector('.card:not(.hidden)');
+            currentCard.classList.add('card-exit');
+            
+            setTimeout(() => {
+                currentCard.classList.add('hidden');
+                currentCard.classList.remove('card-exit');
+                
+                const finalCard = document.getElementById('card-final');
+                finalCard.classList.remove('hidden');
+                finalCard.classList.add('card-enter');
+                
+                setTimeout(() => {
+                    finalCard.classList.remove('card-enter');
+                }, 700);
+                
+                createConfetti();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 500);
+        }
+
+        function showRespect() {
+            userData.decision = 'declined';
+            userData.declined_at = new Date().toISOString();
+            
+            const currentCard = document.querySelector('.card:not(.hidden)');
+            currentCard.classList.add('card-exit');
+            
+            setTimeout(() => {
+                currentCard.classList.add('hidden');
+                currentCard.classList.remove('card-exit');
+                
+                const respectCard = document.getElementById('respect');
+                respectCard.classList.remove('hidden');
+                respectCard.classList.add('card-enter');
+                
+                setTimeout(() => {
+                    respectCard.classList.remove('card-enter');
+                }, 700);
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 500);
+        }
+
+        function restartJourney() {
+            // Reset de todas as variáveis
+            userName = '';
+            userData = {};
+            
+            // Reset de todos os cards
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach(card => {
+                card.classList.add('hidden');
+                card.classList.remove('card-enter', 'card-exit');
+            });
+            
+            // Clear inputs
+            document.getElementById('userName').value = '';
+            document.getElementById('phone').value = '';
+            
+            // Show first card
+            const firstCard = document.getElementById('card1');
+            firstCard.classList.remove('hidden');
+            firstCard.classList.add('card-enter');
+            
+            setTimeout(() => {
+                firstCard.classList.remove('card-enter');
+            }, 700);
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function createConfetti() {
+            const confettiCount = 50;
+            const container = document.body;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7'][Math.floor(Math.random() * 7)];
+                confetti.style.borderRadius = '50%';
+                confetti.style.zIndex = '1000';
+                confetti.style.pointerEvents = 'none';
+                confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear forwards`;
+                
+                container.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // Função para salvar no Supabase
+        async function saveToSupabase(data) {
+            try {
+                console.log('Dados que seriam salvos no Supabase:', data);
+                
+                // Aqui você faria a chamada real para o Supabase
+                // const response = await fetch(`${SUPABASE_URL}/rest/v1/evangelismo_leads`, {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //         'apikey': SUPABASE_ANON_KEY,
+                //         'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                //     },
+                //     body: JSON.stringify(data)
+                // });
+                
+                // if (!response.ok) {
+                //     throw new Error('Erro ao salvar dados');
+                // }
+                
+                return true;
+            } catch (error) {
+                console.error('Erro ao salvar no Supabase:', error);
+                return false;
+            }
+        }
+
+        // Adiciona CSS para animação dos confetes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes confettiFall {
+                0% {
+                    transform: translateY(-10px) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(100vh) rotate(720deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Adiciona vibração no mobile para feedback tátil
+        function vibrateDevice() {
+            if (navigator.vibrate) {
+                navigator.vibrate(100);
+            }
+        }
+
+        // Adiciona vibração aos botões
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('option-btn')) {
+                vibrateDevice();
+            }
+        });
+
+        // Preload de imagens e otimizações
+        document.addEventListener('DOMContentLoaded', function() {
+            // Adiciona classe de carregamento suave
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease-in';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
