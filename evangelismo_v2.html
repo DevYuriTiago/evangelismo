@@ -6,23 +6,30 @@
     <meta name="description" content="Descubra o amor incondicional de Deus. Uma conversa que pode mudar sua vida para sempre.">
     <meta name="keywords" content="evangelismo, Jesus Cristo, salvação, vida eterna, palavra da fé, RHEMA">
     <meta name="author" content="Yuri Tiago">
-    
-    <!-- Open Graph / Facebook -->
+      <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://evangelismo.netlify.app/">
     <meta property="og:title" content="Uma Decisão que Muda Tudo">
     <meta property="og:description" content="Descubra o amor incondicional de Deus. Uma conversa que pode mudar sua vida para sempre.">
-    <meta property="og:image" content="https://evangelismo.netlify.app/preview.jpg">
-
-    <!-- Twitter -->
+    <meta property="og:image" content="https://evangelismo.netlify.app/logoSF.png">    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://evangelismo.netlify.app/">
     <meta property="twitter:title" content="Uma Decisão que Muda Tudo">
     <meta property="twitter:description" content="Descubra o amor incondicional de Deus. Uma conversa que pode mudar sua vida para sempre.">
-    <meta property="twitter:image" content="https://evangelismo.netlify.app/preview.jpg">
+    <meta property="twitter:image" content="https://evangelismo.netlify.app/logoSF.png">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <!-- WhatsApp / Telegram -->
+    <meta property="whatsapp:title" content="Uma Decisão que Muda Tudo">
+    <meta property="whatsapp:description" content="Descubra o amor incondicional de Deus. Uma conversa que pode mudar sua vida para sempre.">
+    <meta property="whatsapp:image" content="https://evangelismo.netlify.app/logoSF.png">
+    
+    <!-- Instagram (usa Open Graph) -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Evangelismo Online - Uma Decisão que Muda Tudo"><!-- Favicon -->
+    <link rel="icon" type="image/png" href="/logoSF.png">
+    <link rel="shortcut icon" type="image/png" href="/logoSF.png">
+    <link rel="apple-touch-icon" href="/logoSF.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -120,9 +127,7 @@
             align-items: center;
             position: relative;
             z-index: 10;
-        }
-
-        .card {
+        }        .card {
             background: white;
             border-radius: 20px;
             padding: 30px 20px;
@@ -131,44 +136,48 @@
             max-width: 400px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+            /* Removido transform e opacity iniciais para evitar conflito */
+        }
+
+        /* Animação inicial apenas para o primeiro card */
+        .card:first-of-type {
             transform: translateY(50px);
             opacity: 0;
             animation: slideUp 0.8s ease-out forwards;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.4s; }
-        .card:nth-child(4) { animation-delay: 0.6s; }
-
         .card-enter {
-            animation: cardSlideIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            opacity: 0;
+            transform: translateX(100%) scale(0.9);
+            animation: cardSlideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
 
         .card-exit {
-            animation: cardSlideOut 0.5s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            animation: cardSlideOut 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
         }
 
         @keyframes cardSlideIn {
             0% {
-                transform: translateX(100%) scale(0.8) rotateY(45deg);
+                transform: translateX(100%) scale(0.9);
                 opacity: 0;
             }
             100% {
-                transform: translateX(0) scale(1) rotateY(0deg);
+                transform: translateX(0) scale(1);
                 opacity: 1;
             }
         }
 
         @keyframes cardSlideOut {
             0% {
-                transform: translateX(0) scale(1) rotateY(0deg);
+                transform: translateX(0) scale(1);
                 opacity: 1;
             }
             100% {
-                transform: translateX(-100%) scale(0.8) rotateY(-45deg);
+                transform: translateX(-100%) scale(0.9);
                 opacity: 0;
             }
         }
@@ -381,13 +390,83 @@
             font-size: clamp(0.9rem, 3vw, 1rem);
             display: flex;
             align-items: center;
-        }
-
-        .next-steps li::before {
+        }        .next-steps li::before {
             content: '✓';
             margin-right: 10px;
             color: #00b894;
             font-weight: bold;
+        }
+
+        /* Estilos para seção de compartilhamento */
+        .share-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .share-section h3 {
+            color: #29b5ec;
+            margin-bottom: 10px;
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+        }
+
+        .share-section p {
+            color:  #29b5ec;
+            margin-bottom: 20px;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+        }
+
+        .share-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .share-btn {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .share-btn.whatsapp {
+            background: linear-gradient(135deg, #25D366, #1eb854);
+        }
+
+        .share-btn.instagram {
+            background: linear-gradient(135deg, #E4405F, #833AB4, #405DE6);
+        }
+
+        .share-btn.facebook {
+            background: linear-gradient(135deg, #1877F2, #0d5dbf);
+        }
+
+        .share-btn.copy {
+            background: linear-gradient(135deg, #6c757d, #495057);
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .share-btn:active {
+            transform: translateY(0);
+        }
+
+        .share-btn i {
+            font-size: 1.1em;
         }
 
         .hidden {
@@ -431,7 +510,7 @@
         }
 
         .user-name {
-            color: #667eea;
+            color: #0532fa;
             font-weight: 700;
         }
 
@@ -644,13 +723,12 @@
                 <div class="question">
                     <h2>📞 <span class="user-name"></span>, queremos te apoiar!</h2>
                     <p>Se você quiser, compartilhe seu telefone para receber apoio, oração e materiais que vão te ajudar nessa nova jornada!</p>
-                </div>
-
-                <div class="input-group phone-optional">
+                </div>                <div class="input-group phone-optional">
                     <label for="phone">
                         <i class="fas fa-phone"></i> Telefone (Opcional)
                     </label>
-                    <input type="tel" id="phone" placeholder="(00) 00000-0000">
+                    <input type="tel" id="phone" placeholder="(00) 0.0000-0000" maxlength="16" 
+                           oninput="formatPhoneNumber(this)" onkeypress="return isNumberKey(event)">
                     <div class="phone-note">
                         💡 Seu telefone será usado apenas para apoio espiritual e oração
                     </div>
@@ -677,11 +755,36 @@
                     <ul>
                         <li>Ore e converse com Deus diariamente</li>
                         <li>Leia a Bíblia para conhecê-Lo melhor</li>
-                        <li>Encontre uma igreja evangélica para congregar</li>
+                        <li>Encontre uma comunidade para congregar</li>
                         <li>Declare as promessas de Deus sobre sua vida</li>
                         <li>Compartilhe sua fé com outros</li>
                         <li>Viva pela fé na Palavra de Deus</li>
                     </ul>
+                </div>
+
+                <div class="share-section">
+                    <h3>💝 Compartilhe esta bênção com outros!</h3>
+                    <p>Ajude outras pessoas a conhecerem o amor de Deus compartilhando esta experiência:</p>
+                    <div class="share-buttons">
+                        <button class="share-btn whatsapp" onclick="shareWhatsApp()">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </button>
+                        <button class="share-btn instagram" onclick="shareInstagram()">
+                            <i class="fab fa-instagram"></i> Instagram
+                        </button>
+                        <button class="share-btn facebook" onclick="shareFacebook()">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </button>
+                        <button class="share-btn copy" onclick="copyLink()">
+                            <i class="fas fa-link"></i> Copiar Link
+                        </button>
+                    </div>
+                </div>
+
+                <div class="options">
+                    <button class="option-btn" onclick="restartJourney()">
+                        <i class="fas fa-redo"></i> Recomeçar para outra pessoa
+                    </button>
                 </div>
             </div>
 
@@ -701,27 +804,90 @@
                 </div>
             </div>
         </div>
-    </div>    <script>
-        // Variável global para armazenar o nome do usuário
+    </div>    <script>        // Variáveis globais para armazenar dados do usuário
         let userName = '';
         let userData = {};
         let supabaseClient = null;
+        let userRecordId = null; // ID do registro no Supabase para updates// Configuração do Supabase - CREDENCIAIS ATUALIZADAS
+        const SUPABASE_URL = 'https://zgdmkokrmchwfvtbcbbw.supabase.co';        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpnZG1rb2tybWNod2Z2dGJjYmJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAyNTUyNjcsImV4cCI6MjA2NTgzMTI2N30.JpRqsTCvkc2fN4SoJI6Rbjsw7f4BT1IJu9IpOK5avNE';
 
-        // Configuração do Supabase - SUBSTITUA PELAS SUAS CREDENCIAIS
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL'; // Ex: https://xyzproject.supabase.co
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
-
-        // Inicializar Supabase se as credenciais estiverem configuradas
+        // Inicializar Supabase com configurações otimizadas
         if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
             try {
                 const { createClient } = supabase;
-                supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                console.log('✅ Supabase conectado com sucesso!');
+                supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+                    auth: {
+                        autoRefreshToken: false, // Não precisamos de autenticação para este projeto
+                        persistSession: false    // Não precisamos persistir sessão
+                    },
+                    global: {
+                        headers: {
+                            'X-Client-Info': 'evangelismo-online-v1'
+                        }
+                    }
+                });
+                
+                // console.log('✅ Supabase conectado com sucesso!');
+                
+                // Teste de conexão silencioso (sem logs)
+                // testSupabaseConnection();
             } catch (error) {
                 console.error('❌ Erro ao conectar com Supabase:', error);
             }
         } else {
-            console.warn('⚠️ Supabase não configurado. Configure SUPABASE_URL e SUPABASE_ANON_KEY');
+            // console.warn('⚠️ Supabase não configurado. Configure SUPABASE_URL e SUPABASE_ANON_KEY');
+        }
+
+        // Função para testar a conexão com Supabase
+        async function testSupabaseConnection() {
+            try {
+                console.log('🧪 Testando conexão básica...');
+                
+                // Teste 1: Verificar se consegue fazer SELECT
+                const { data: selectData, error: selectError } = await supabaseClient
+                    .from('evangelismo_leads')
+                    .select('count', { count: 'exact', head: true });
+                
+                if (selectError) {
+                    console.warn('⚠️ Erro no SELECT:', selectError);
+                } else {
+                    console.log('✅ SELECT funcionando');
+                }
+
+                // Teste 2: Tentar INSERT simples
+                console.log('🧪 Testando INSERT...');
+                const testData = {
+                    name: 'Teste Conexão',
+                    step: 'test_connection',
+                    started_at: new Date().toISOString()
+                };
+
+                const { data: insertData, error: insertError } = await supabaseClient
+                    .from('evangelismo_leads')
+                    .insert([testData])
+                    .select();
+
+                if (insertError) {
+                    console.error('❌ Erro no INSERT de teste:', insertError);
+                    console.error('❌ Código do erro:', insertError.code);
+                    console.error('❌ Mensagem:', insertError.message);
+                    console.error('❌ Detalhes:', insertError.details);
+                } else {
+                    console.log('✅ INSERT de teste funcionou:', insertData);
+                    
+                    // Limpar o teste
+                    if (insertData && insertData[0]) {
+                        await supabaseClient
+                            .from('evangelismo_leads')
+                            .delete()
+                            .eq('id', insertData[0].id);
+                        console.log('🧹 Registro de teste removido');
+                    }
+                }
+                
+            } catch (error) {
+                console.error('❌ Erro geral no teste:', error);
+            }
         }
 
         function startJourney() {
@@ -736,13 +902,15 @@
 
             // Atualiza todos os elementos com o nome do usuário
             updateUserName();
-            
-            // Salva os dados iniciais
+              // Salva os dados iniciais
             userData = {
                 name: userName,
                 started_at: new Date().toISOString(),
                 step: 'started'
             };
+
+            // Salva dados iniciais no Supabase
+            saveToSupabase(userData);
 
             nextCard(2);
         }
@@ -756,90 +924,137 @@
 
         function nextCard(cardNumber) {
             const currentCard = document.querySelector('.card:not(.hidden)');
+            if (!currentCard) return;
+            
+            // Remove qualquer animação anterior para evitar conflitos
+            currentCard.classList.remove('card-enter', 'card-exit');
+            
+            // Força um reflow para garantir que as classes foram removidas
+            currentCard.offsetHeight;
             
             // Adiciona animação de saída
             currentCard.classList.add('card-exit');
             
             setTimeout(() => {
-                // Esconde o card atual
+                // Esconde o card atual e limpa classes
                 currentCard.classList.add('hidden');
-                currentCard.classList.remove('card-exit');
+                currentCard.classList.remove('card-exit', 'card-enter');
                 
                 // Mostra o próximo card
-                const nextCard = document.getElementById(`card${cardNumber}`);
-                nextCard.classList.remove('hidden');
-                nextCard.classList.add('card-enter');
-                
-                // Remove a classe de entrada após a animação
-                setTimeout(() => {
-                    nextCard.classList.remove('card-enter');
-                }, 700);
+                const nextCardElement = document.getElementById(`card${cardNumber}`);
+                if (nextCardElement) {
+                    // Remove classes anteriores
+                    nextCardElement.classList.remove('card-enter', 'card-exit');
+                    
+                    // Força reflow
+                    nextCardElement.offsetHeight;
+                    
+                    // Mostra e anima
+                    nextCardElement.classList.remove('hidden');
+                    nextCardElement.classList.add('card-enter');
+                    
+                    // Remove a classe de entrada após a animação
+                    setTimeout(() => {
+                        nextCardElement.classList.remove('card-enter');
+                    }, 600);
+                }
                 
                 // Atualiza o progresso
                 userData.step = `card${cardNumber}`;
                 
                 // Scroll suave para o topo
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 500);
+            }, 400);
         }
 
         function acceptJesus() {
             userData.decision = 'accepted';
             userData.accepted_at = new Date().toISOString();
+            userData.step = 'accepted_jesus';
+            
+            // Atualiza a decisão no Supabase
+            saveToSupabase(userData);
             
             const currentCard = document.querySelector('.card:not(.hidden)');
+            if (!currentCard) return;
+            
+            // Remove classes anteriores e força reflow
+            currentCard.classList.remove('card-enter', 'card-exit');
+            currentCard.offsetHeight;
+            
             currentCard.classList.add('card-exit');
             
             setTimeout(() => {
                 currentCard.classList.add('hidden');
-                currentCard.classList.remove('card-exit');
+                currentCard.classList.remove('card-exit', 'card-enter');
                 
                 const congratsCard = document.getElementById('card9');
-                congratsCard.classList.remove('hidden');
-                congratsCard.classList.add('card-enter');
-                
-                setTimeout(() => {
-                    congratsCard.classList.remove('card-enter');
-                }, 700);
+                if (congratsCard) {
+                    congratsCard.classList.remove('card-enter', 'card-exit');
+                    congratsCard.offsetHeight;
+                    
+                    congratsCard.classList.remove('hidden');
+                    congratsCard.classList.add('card-enter');
+                    
+                    setTimeout(() => {
+                        congratsCard.classList.remove('card-enter');
+                    }, 600);
+                }
                 
                 // Adiciona confetes
                 createConfetti();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 500);
+            }, 400);
         }
 
         function finalizePage() {
-            const phone = document.getElementById('phone').value.trim();
+            const phoneInput = document.getElementById('phone');
+            const phone = phoneInput.value.trim();
             
-            userData.phone = phone;
+            // Validar telefone se fornecido
+            if (phone && !isValidBrazilianPhone(phone)) {
+                alert('Por favor, digite um telefone válido ou deixe em branco.');
+                phoneInput.focus();
+                return;
+            }
+              // Atualizar dados do usuário
+            userData.phone = phone || null;
             userData.completed_at = new Date().toISOString();
             userData.step = 'completed';
             
-            // Aqui você salvaria no Supabase
+            // Salva no Supabase
             saveToSupabase(userData);
             
             const currentCard = document.querySelector('.card:not(.hidden)');
+            if (!currentCard) return;
+            
+            currentCard.classList.remove('card-enter', 'card-exit');
+            currentCard.offsetHeight;
             currentCard.classList.add('card-exit');
             
             setTimeout(() => {
                 currentCard.classList.add('hidden');
-                currentCard.classList.remove('card-exit');
+                currentCard.classList.remove('card-exit', 'card-enter');
                 
                 const finalCard = document.getElementById('card-final');
-                finalCard.classList.remove('hidden');
-                finalCard.classList.add('card-enter');
-                
-                setTimeout(() => {
-                    finalCard.classList.remove('card-enter');
-                }, 700);
-                
-                // Mais confetes para celebração final
+                if (finalCard) {
+                    finalCard.classList.remove('card-enter', 'card-exit');
+                    finalCard.offsetHeight;
+                    
+                    finalCard.classList.remove('hidden');
+                    finalCard.classList.add('card-enter');
+                    
+                    setTimeout(() => {
+                        finalCard.classList.remove('card-enter');
+                    }, 600);
+                }
+                  // Mais confetes para celebração final
                 createConfetti();
                 setTimeout(() => createConfetti(), 1000);
                 setTimeout(() => createConfetti(), 2000);
                 
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 500);
+            }, 400);
         }
 
         function skipPhone() {
@@ -847,56 +1062,76 @@
             userData.completed_at = new Date().toISOString();
             userData.step = 'completed_no_phone';
             
-            // Aqui você salvaria no Supabase
+            // Salva no Supabase
             saveToSupabase(userData);
             
             const currentCard = document.querySelector('.card:not(.hidden)');
+            if (!currentCard) return;
+            
+            currentCard.classList.remove('card-enter', 'card-exit');
+            currentCard.offsetHeight;
             currentCard.classList.add('card-exit');
             
             setTimeout(() => {
                 currentCard.classList.add('hidden');
-                currentCard.classList.remove('card-exit');
+                currentCard.classList.remove('card-exit', 'card-enter');
                 
                 const finalCard = document.getElementById('card-final');
-                finalCard.classList.remove('hidden');
-                finalCard.classList.add('card-enter');
-                
-                setTimeout(() => {
-                    finalCard.classList.remove('card-enter');
-                }, 700);
+                if (finalCard) {
+                    finalCard.classList.remove('card-enter', 'card-exit');
+                    finalCard.offsetHeight;
+                    
+                    finalCard.classList.remove('hidden');
+                    finalCard.classList.add('card-enter');
+                    
+                    setTimeout(() => {
+                        finalCard.classList.remove('card-enter');
+                    }, 600);
+                }
                 
                 createConfetti();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 500);
-        }
-
-        function showRespect() {
+            }, 400);
+        }        function showRespect() {
             userData.decision = 'declined';
             userData.declined_at = new Date().toISOString();
+            userData.step = 'declined';
+            
+            // Salva a decisão no Supabase
+            saveToSupabase(userData);
             
             const currentCard = document.querySelector('.card:not(.hidden)');
+            if (!currentCard) return;
+            
+            currentCard.classList.remove('card-enter', 'card-exit');
+            currentCard.offsetHeight;
             currentCard.classList.add('card-exit');
             
             setTimeout(() => {
                 currentCard.classList.add('hidden');
-                currentCard.classList.remove('card-exit');
+                currentCard.classList.remove('card-exit', 'card-enter');
                 
                 const respectCard = document.getElementById('respect');
-                respectCard.classList.remove('hidden');
-                respectCard.classList.add('card-enter');
-                
-                setTimeout(() => {
-                    respectCard.classList.remove('card-enter');
-                }, 700);
-                
+                if (respectCard) {
+                    respectCard.classList.remove('card-enter', 'card-exit');
+                    respectCard.offsetHeight;
+                    
+                    respectCard.classList.remove('hidden');
+                    respectCard.classList.add('card-enter');
+                    
+                    setTimeout(() => {
+                        respectCard.classList.remove('card-enter');
+                    }, 600);
+                }                
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 500);
+            }, 400);
         }
 
         function restartJourney() {
             // Reset de todas as variáveis
             userName = '';
             userData = {};
+            userRecordId = null; // Reset do ID para criar novo registro
             
             // Reset de todos os cards
             const allCards = document.querySelectorAll('.card');
@@ -944,43 +1179,76 @@
                     confetti.remove();
                 }, 5000);
             }
-        }        // Função para salvar no Supabase
+        }
+
+        // Função para salvar no Supabase (versão corrigida - único registro)
         async function saveToSupabase(data) {
             if (!supabaseClient) {
                 console.log('💾 Dados que seriam salvos (Supabase não configurado):', data);
                 return true; // Simula sucesso para não quebrar o fluxo
             }
 
+            // Validação básica dos dados antes de enviar
+            if (!data.name || data.name.trim().length < 2) {
+                console.error('❌ Nome é obrigatório e deve ter pelo menos 2 caracteres');
+                return false;
+            }
+
             try {
                 // Obter IP do usuário
                 const userIP = await getUserIP();
                 
-                const { data: result, error } = await supabaseClient
-                    .from('evangelismo_leads')
-                    .insert([{
-                        name: data.name,
-                        phone: data.phone,
-                        decision: data.decision,
-                        step: data.step,
-                        started_at: data.started_at,
-                        accepted_at: data.accepted_at,
-                        declined_at: data.declined_at,
-                        completed_at: data.completed_at,
-                        ip_address: userIP,
-                        user_agent: navigator.userAgent
-                    }]);
+                // Preparar dados para inserção/atualização
+                const recordData = {
+                    name: data.name.trim(),
+                    phone: data.phone ? data.phone.trim() : null,
+                    decision: data.decision || null,
+                    step: data.step || 'started',
+                    started_at: data.started_at,
+                    accepted_at: data.accepted_at || null,
+                    declined_at: data.declined_at || null,
+                    completed_at: data.completed_at || null,
+                    ip_address: userIP,
+                    user_agent: navigator.userAgent.substring(0, 500) // Limitar tamanho
+                };
+
+                let result, error;
+
+                if (!userRecordId) {
+                    // PRIMEIRA VEZ - INSERT (criar novo registro)
+                    const response = await supabaseClient
+                        .from('evangelismo_leads')
+                        .insert([recordData])
+                        .select(); // Retorna o registro criado para pegar o ID
+
+                    result = response.data;
+                    error = response.error;
+
+                    // Salvar o ID do registro para futuras atualizações
+                    if (result && result.length > 0) {
+                        userRecordId = result[0].id;
+                    }
+                } else {
+                    // ATUALIZAÇÕES - UPDATE (atualizar registro existente)
+                    const response = await supabaseClient
+                        .from('evangelismo_leads')
+                        .update(recordData)
+                        .eq('id', userRecordId)
+                        .select();
+
+                    result = response.data;
+                    error = response.error;
+                }
 
                 if (error) {
-                    console.error('❌ Erro ao salvar no Supabase:', error);
+                    // Log apenas em caso de erro crítico
                     return false;
                 }
 
-                console.log('✅ Dados salvos com sucesso no Supabase:', result);
                 return true;
             } catch (error) {
-                console.error('❌ Erro na conexão com Supabase:', error);
-                return false;
-            }
+                // Falha silenciosa em caso de erro de conexão
+                return false;            }
         }
 
         // Função auxiliar para pegar IP do usuário
@@ -990,8 +1258,7 @@
                 const data = await response.json();
                 return data.ip;
             } catch (error) {
-                console.log('⚠️ Não foi possível obter IP:', error);
-                return null;
+                return null; // Falha silenciosa
             }
         }
 
@@ -1034,6 +1301,181 @@
                 document.body.style.opacity = '1';
             }, 100);
         });
+
+        // ========================================
+        // FUNÇÕES DE FORMATAÇÃO DE TELEFONE
+        // ========================================
+
+        // Função para formatar telefone automaticamente
+        function formatPhoneNumber(input) {
+            // Remove tudo que não é número
+            let value = input.value.replace(/\D/g, '');
+            
+            // Limita a 11 dígitos (2 DDD + 9 número)
+            if (value.length > 11) {
+                value = value.substring(0, 11);
+            }
+            
+            // Aplica a formatação (XX) X.XXXX-XXXX
+            if (value.length <= 2) {
+                value = value.replace(/(\d{0,2})/, '($1');
+            } else if (value.length <= 3) {
+                value = value.replace(/(\d{2})(\d{0,1})/, '($1) $2');
+            } else if (value.length <= 7) {
+                value = value.replace(/(\d{2})(\d{1})(\d{0,4})/, '($1) $2.$3');
+            } else {
+                value = value.replace(/(\d{2})(\d{1})(\d{4})(\d{0,4})/, '($1) $2.$3-$4');
+            }
+            
+            input.value = value;
+        }
+
+        // Função para permitir apenas números e backspace
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            // Permite: backspace, delete, tab, escape, enter
+            if ([8, 9, 27, 13, 46].indexOf(charCode) !== -1 ||
+                // Permite: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                (charCode === 65 && evt.ctrlKey === true) ||
+                (charCode === 67 && evt.ctrlKey === true) ||
+                (charCode === 86 && evt.ctrlKey === true) ||
+                (charCode === 88 && evt.ctrlKey === true)) {
+                return true;
+            }
+            // Permite apenas números (0-9)
+            if (charCode < 48 || charCode > 57) {
+                return false;
+            }
+            return true;
+        }        // Função para validar telefone brasileiro
+        function isValidBrazilianPhone(phone) {
+            if (!phone) return true; // É opcional
+            
+            // Remove formatação para validar
+            const numbers = phone.replace(/\D/g, '');
+            
+            // Deve ter 10 ou 11 dígitos (DDD + número)
+            if (numbers.length < 10 || numbers.length > 11) {
+                return false;
+            }
+            
+            // DDD deve estar entre 11 e 99
+            const ddd = parseInt(numbers.substring(0, 2));
+            if (ddd < 11 || ddd > 99) {
+                return false;
+            }
+            
+            return true;
+        }
+
+        // ========================================
+        // FUNÇÕES DE COMPARTILHAMENTO
+        // ========================================
+
+        function shareWhatsApp() {
+            const message = `🙏 Acabei de ter uma experiência transformadora! Descobri o amor incondicional de Deus através desta conversa especial. Que tal você também conhecer mais sobre o plano de salvação?\n\n✨ Acesse: ${window.location.href}\n\n#Jesus #Salvação #VidaEterna #PalavraDaFé`;
+            
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function shareInstagram() {
+            // Instagram não permite compartilhamento direto via URL, então vamos copiar o texto
+            const message = `🙏 Acabei de ter uma experiência transformadora! Descobri o amor incondicional de Deus através desta conversa especial.\n\n✨ Link na bio ou acesse: evangelismo.netlify.app\n\n#Jesus #Salvação #VidaEterna #PalavraDaFé #Evangelismo #Deus #Cristo`;
+            
+            copyToClipboard(message, 'Texto copiado! Cole no seu story ou post do Instagram 📱');
+        }
+
+        function shareFacebook() {
+            const url = window.location.href;
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+            window.open(facebookUrl, '_blank', 'width=600,height=400');
+        }
+
+        function copyLink() {
+            const url = window.location.href;
+            copyToClipboard(url, 'Link copiado! Compartilhe com quem você ama ❤️');
+        }
+
+        function copyToClipboard(text, successMessage) {
+            if (navigator.clipboard && window.isSecureContext) {
+                // Método moderno para HTTPS
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast(successMessage);
+                }).catch(() => {
+                    fallbackCopyTextToClipboard(text, successMessage);
+                });
+            } else {
+                // Fallback para HTTP ou navegadores mais antigos
+                fallbackCopyTextToClipboard(text, successMessage);
+            }
+        }
+
+        function fallbackCopyTextToClipboard(text, successMessage) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast(successMessage);
+            } catch (err) {
+                showToast('Erro ao copiar. Tente novamente.');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        function showToast(message) {
+            // Criar toast notification
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 25px;
+                font-size: 14px;
+                z-index: 10000;
+                animation: toastSlide 0.3s ease-out;
+            `;
+            toast.textContent = message;
+            
+            // Adicionar CSS da animação
+            if (!document.getElementById('toast-styles')) {
+                const style = document.createElement('style');
+                style.id = 'toast-styles';
+                style.textContent = `
+                    @keyframes toastSlide {
+                        0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                        100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(toast);
+            
+            // Remover após 3 segundos
+            setTimeout(() => {
+                toast.style.animation = 'toastSlide 0.3s ease-out reverse';
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        document.body.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
     </script>
 </body>
 </html>
