@@ -38,9 +38,17 @@ pids/
 dist/
 build/
 
+# Netlify
+.netlify/
+.netlify
+
 # Supabase local
 .supabase/
 
 # Temporary files
 *.tmp
 *.temp
+
+# Backup files
+*.bak
+*.backup

@@ -1,0 +1,38 @@
+{
+  "name": "evangelismo-online",
+  "version": "1.0.0",
+  "description": "Sistema de Evangelismo Online - Palavra da Fé",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve .",
+    "build": "echo 'Static site, no build needed'",
+    "deploy": "netlify deploy --prod"
+  },
+  "keywords": [
+    "evangelismo",
+    "jesus-cristo",
+    "salvacao",
+    "vida-eterna",
+    "palavra-da-fe",
+    "rhema",
+    "biblia",
+    "protestante"
+  ],
+  "author": "Yuri Tiago",
+  "license": "MIT",
+  "homepage": "https://evangelismo.netlify.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DevYuriTiago/evangelismo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DevYuriTiago/evangelismo/issues"
+  },
+  "devDependencies": {
+    "serve": "^14.2.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

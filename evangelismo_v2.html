@@ -2,10 +2,33 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uma Decisão que Muda Tudo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Uma Decisão que Muda Tudo - Evangelismo Online</title>
+    <meta name="description" content="Descubra o amor incondicional de Deus. Uma conversa que pode mudar sua vida para sempre.">
+    <meta name="keywords" content="evangelismo, Jesus Cristo, salvação, vida eterna, palavra da fé, RHEMA">
+    <meta name="author" content="Yuri Tiago">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://evangelismo.netlify.app/">
+    <meta property="og:title" content="Uma Decisão que Muda Tudo">
+    <meta property="og:description" content="Descubra o amor incondicional de Deus. Uma conversa que pode mudar sua vida para sempre.">
+    <meta property="og:image" content="https://evangelismo.netlify.app/preview.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://evangelismo.netlify.app/">
+    <meta property="twitter:title" content="Uma Decisão que Muda Tudo">
+    <meta property="twitter:description" content="Descubra o amor incondicional de Deus. Uma conversa que pode mudar sua vida para sempre.">
+    <meta property="twitter:image" content="https://evangelismo.netlify.app/preview.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * {
             margin: 0;
@@ -678,16 +701,28 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <script>
+    </div>    <script>
         // Variável global para armazenar o nome do usuário
         let userName = '';
         let userData = {};
+        let supabaseClient = null;
 
-        // Configuração do Supabase (substitua pelos seus dados)
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+        // Configuração do Supabase - SUBSTITUA PELAS SUAS CREDENCIAIS
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL'; // Ex: https://xyzproject.supabase.co
         const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+        // Inicializar Supabase se as credenciais estiverem configuradas
+        if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
+            try {
+                const { createClient } = supabase;
+                supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                console.log('✅ Supabase conectado com sucesso!');
+            } catch (error) {
+                console.error('❌ Erro ao conectar com Supabase:', error);
+            }
+        } else {
+            console.warn('⚠️ Supabase não configurado. Configure SUPABASE_URL e SUPABASE_ANON_KEY');
+        }
 
         function startJourney() {
             const nameInput = document.getElementById('userName');
@@ -909,32 +944,54 @@
                     confetti.remove();
                 }, 5000);
             }
-        }
-
-        // Função para salvar no Supabase
+        }        // Função para salvar no Supabase
         async function saveToSupabase(data) {
+            if (!supabaseClient) {
+                console.log('💾 Dados que seriam salvos (Supabase não configurado):', data);
+                return true; // Simula sucesso para não quebrar o fluxo
+            }
+
             try {
-                console.log('Dados que seriam salvos no Supabase:', data);
+                // Obter IP do usuário
+                const userIP = await getUserIP();
                 
-                // Aqui você faria a chamada real para o Supabase
-                // const response = await fetch(`${SUPABASE_URL}/rest/v1/evangelismo_leads`, {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //         'apikey': SUPABASE_ANON_KEY,
-                //         'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-                //     },
-                //     body: JSON.stringify(data)
-                // });
-                
-                // if (!response.ok) {
-                //     throw new Error('Erro ao salvar dados');
-                // }
-                
+                const { data: result, error } = await supabaseClient
+                    .from('evangelismo_leads')
+                    .insert([{
+                        name: data.name,
+                        phone: data.phone,
+                        decision: data.decision,
+                        step: data.step,
+                        started_at: data.started_at,
+                        accepted_at: data.accepted_at,
+                        declined_at: data.declined_at,
+                        completed_at: data.completed_at,
+                        ip_address: userIP,
+                        user_agent: navigator.userAgent
+                    }]);
+
+                if (error) {
+                    console.error('❌ Erro ao salvar no Supabase:', error);
+                    return false;
+                }
+
+                console.log('✅ Dados salvos com sucesso no Supabase:', result);
                 return true;
             } catch (error) {
-                console.error('Erro ao salvar no Supabase:', error);
+                console.error('❌ Erro na conexão com Supabase:', error);
                 return false;
+            }
+        }
+
+        // Função auxiliar para pegar IP do usuário
+        async function getUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.log('⚠️ Não foi possível obter IP:', error);
+                return null;
             }
         }
 
