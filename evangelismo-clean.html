@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Uma Decisão que Muda Tudo - Evangelismo Online</title>
+    <meta
+      name="description"
+      content="Descubra o amor incondicional de Deus. Uma conversa que pode mudar sua vida para sempre."
+    />
+    <meta
+      name="keywords"
+      content="evangelismo, Jesus Cristo, salvação, vida eterna, palavra da fé, RHEMA"
+    />
+    <meta name="author" content="Yuri Tiago" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://evangelismo.netlify.app/" />
+    <meta property="og:title" content="Uma Decisão que Muda Tudo" />
+    <meta
+      property="og:description"
+      content="Descubra o amor incondicional de Deus. Uma conversa que pode mudar sua vida para sempre."
+    />
+    <meta
+      property="og:image"
+      content="https://evangelismo.netlify.app/assets/logoSF.png"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://evangelismo.netlify.app/" />
+    <meta property="twitter:title" content="Uma Decisão que Muda Tudo" />
+    <meta
+      property="twitter:description"
+      content="Descubra o amor incondicional de Deus. Uma conversa que pode mudar sua vida para sempre."
+    />
+    <meta
+      property="twitter:image"
+      content="https://evangelismo.netlify.app/assets/logoSF.png"
+    />
+
+    <!-- WhatsApp / Telegram -->
+    <meta property="whatsapp:title" content="Uma Decisão que Muda Tudo" />
+    <meta
+      property="whatsapp:description"
+      content="Descubra o amor incondicional de Deus. Uma conversa que pode mudar sua vida para sempre."
+    />
+    <meta
+      property="whatsapp:image"
+      content="https://evangelismo.netlify.app/assets/logoSF.png"
+    />
+
+    <!-- Instagram (usa Open Graph) -->
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Evangelismo Online - Uma Decisão que Muda Tudo"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/logoSF.png" />
+    <link rel="shortcut icon" type="image/png" href="/assets/logoSF.png" />
+    <link rel="apple-touch-icon" href="/assets/logoSF.png" />
+
+    <!-- External Resources -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Local Styles -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Floating Elements -->
+      <div class="floating-elements">
+        <div class="floating-heart" style="top: 10%; left: 10%">✨</div>
+        <div
+          class="floating-heart"
+          style="top: 20%; left: 80%; animation-delay: -2s"
+        >
+          💙
+        </div>
+        <div
+          class="floating-heart"
+          style="top: 60%; left: 5%; animation-delay: -4s"
+        >
+          🙏
+        </div>
+        <div
+          class="floating-heart"
+          style="top: 80%; left: 90%; animation-delay: -1s"
+        >
+          ⭐
+        </div>
+        <div
+          class="floating-heart"
+          style="top: 40%; left: 95%; animation-delay: -3s"
+        >
+          💫
+        </div>
+      </div>
+
+      <!-- Header -->
+      <header class="header">
+        <h1>💙 Uma Decisão que Muda Tudo</h1>
+        <p class="subtitle">Descubra o amor incondicional de Deus</p>
+      </header>
+
+      <!-- Main Content -->
+      <main class="content">
+        <!-- Card 1: Nome -->
+        <div class="card" id="card1">
+          <div class="question">
+            <h2>👋 Olá! Seja bem-vindo(a)!</h2>
+            <p>
+              Antes de começarmos essa conversa especial, gostaríamos de
+              conhecer você melhor.
+            </p>
+          </div>
+          <div class="input-group">
+            <label for="userName">
+              <i class="fas fa-user"></i> Qual é o seu primeiro nome?
+            </label>
+            <input
+              type="text"
+              id="userName"
+              placeholder="Digite seu primeiro nome"
+              required
+            />
+          </div>
+          <div class="options">
+            <button class="option-btn" onclick="startJourney()">
+              <i class="fas fa-arrow-right"></i> Começar conversa
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2: Sentido da vida -->
+        <div class="card hidden" id="card2">
+          <div class="question">
+            <h2>🤔 Olá, <span class="user-name"></span>!</h2>
+            <p>
+              Que bom ter você aqui! Vamos começar com uma pergunta simples:
+            </p>
+            <p>
+              <strong
+                >Você já parou para pensar qual é o verdadeiro sentido da
+                vida?</strong
+              >
+            </p>
+          </div>
+          <div class="options">
+            <button class="option-btn" onclick="nextCard(3)">
+              <i class="fas fa-lightbulb"></i> Sim, já pensei sobre isso
+            </button>
+            <button class="option-btn" onclick="nextCard(3)">
+              <i class="fas fa-question"></i> Às vezes me pergunto...
+            </button>
+            <button class="option-btn" onclick="nextCard(3)">
+              <i class="fas fa-shrug"></i> Nunca pensei muito nisso
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3: Vazio interior -->
+        <div class="card hidden" id="card3">
+          <div class="question">
+            <h2>💭 <span class="user-name"></span>, todos nós sentimos...</h2>
+            <p>
+              Às vezes, mesmo tendo conquistas, relacionamentos ou sucessos,
+              sentimos que algo está faltando, não é mesmo?
+            </p>
+            <p><strong>Você já sentiu esse "vazio" no coração?</strong></p>
+          </div>
+          <div class="options">
+            <button class="option-btn" onclick="nextCard(4)">
+              <i class="fas fa-heart-broken"></i> Sim, às vezes sinto isso
+            </button>
+            <button class="option-btn" onclick="nextCard(4)">
+              <i class="fas fa-search"></i> Sempre procuro algo mais
+            </button>
+            <button class="option-btn" onclick="nextCard(4)">
+              <i class="fas fa-smile"></i> Me sinto realizado(a)
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 4: Problema do pecado -->
+        <div class="card hidden" id="card4">
+          <div class="question">
+            <h2>🎯 <span class="user-name"></span>, a verdade é...</h2>
+            <p>
+              Esse vazio que sentimos tem uma explicação. A Bíblia nos ensina
+              que todos nós nos afastamos de Deus em algum momento.
+            </p>
+            <div class="verse">
+              "Todos pecaram e carecem da glória de Deus" - Romanos 3:23
+            </div>
+            <p><strong>Isso faz sentido para você?</strong></p>
+          </div>
+          <div class="options">
+            <button class="option-btn" onclick="nextCard(5)">
+              <i class="fas fa-check"></i> Sim, faz sentido
+            </button>
+            <button class="option-btn" onclick="nextCard(5)">
+              <i class="fas fa-thinking"></i> Preciso entender melhor
+            </button>
+            <button class="option-btn" onclick="nextCard(5)">
+              <i class="fas fa-arrow-right"></i> Continue explicando
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 5: Solução de Deus -->
+        <div class="card hidden" id="card5">
+          <div class="question">
+            <h2>
+              ❤️ Mas aqui vem a boa notícia, <span class="user-name"></span>!
+            </h2>
+            <p>
+              Deus nos ama tanto que enviou Seu próprio filho para nos
+              reconectar com Ele!
+            </p>
+            <div class="verse">
+              "Porque Deus amou o mundo de tal maneira que deu o seu Filho
+              unigênito, para que todo aquele que nele crê não pereça, mas tenha
+              a vida eterna" - João 3:16
+            </div>
+            <p><strong>Que sentimento isso desperta em você?</strong></p>
+          </div>
+          <div class="options">
+            <button class="option-btn" onclick="nextCard(6)">
+              <i class="fas fa-heart"></i> Fico emocionado(a)
+            </button>
+            <button class="option-btn" onclick="nextCard(6)">
+              <i class="fas fa-surprise"></i> É impressionante!
+            </button>
+            <button class="option-btn" onclick="nextCard(6)">
+              <i class="fas fa-pray"></i> Quero saber mais
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 6: Vida eterna -->
+        <div class="card hidden" id="card6">
+          <div class="question">
+            <h2>
+              🌟 <span class="user-name"></span>, Jesus oferece algo incrível!
+            </h2>
+            <p>
+              Ele não veio apenas para resolver nossos problemas temporários,
+              mas para nos dar vida eterna e abundante!
+            </p>
+            <div class="verse">
+              "Eu vim para que tenham vida e a tenham em abundância" - João
+              10:10
+            </div>
+            <p><strong>Você gostaria de ter essa vida plena?</strong></p>
+          </div>
+          <div class="options">
+            <button class="option-btn" onclick="nextCard(7)">
+              <i class="fas fa-thumbs-up"></i> Sim, quero muito!
+            </button>
+            <button class="option-btn" onclick="nextCard(7)">
+              <i class="fas fa-star"></i> Parece incrível!
+            </button>
+            <button class="option-btn" onclick="nextCard(7)">
+              <i class="fas fa-question-circle"></i> Como funciona?
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 7: Como receber -->
+        <div class="card hidden" id="card7">
+          <div class="question">
+            <h2>
+              🙌 <span class="user-name"></span>, é mais simples do que imagina!
+            </h2>
+            <p>Para receber essa nova vida, você só precisa:</p>
+            <p>
+              ✅ <strong>Crer</strong> que Jesus morreu por você<br />
+              ✅ <strong>Confessar</strong> que Ele é seu Salvador<br />
+              ✅ <strong>Receber</strong> Ele em seu coração
+            </p>
+            <div class="verse">
+              "Se confessares com tua boca o Senhor Jesus e creres em teu
+              coração que Deus o ressuscitou dos mortos, serás salvo" - Romanos
+              10:9
+            </div>
+            <p><strong>Está preparado(a) para este momento?</strong></p>
+          </div>
+          <div class="options">
+            <button class="option-btn" onclick="nextCard(8)">
+              <i class="fas fa-pray"></i> Sim, estou pronto(a)!
+            </button>
+            <button class="option-btn" onclick="nextCard(8)">
+              <i class="fas fa-heart"></i> Quero fazer isso!
+            </button>
+            <button class="option-btn" onclick="nextCard(8)">
+              <i class="fas fa-hand-heart"></i> Me ajude neste passo
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 8: Decisão -->
+        <div class="card hidden" id="card8">
+          <div class="question">
+            <h2>⭐ Momento especial, <span class="user-name"></span>!</h2>
+            <p>Este pode ser o momento mais importante da sua vida!</p>
+            <p>
+              <strong
+                >Você quer aceitar Jesus Cristo como seu Senhor e
+                Salvador?</strong
+              >
+            </p>
+            <div class="verse">
+              "Eis que estou à porta e bato; se alguém ouvir a minha voz e abrir
+              a porta, entrarei" - Apocalipse 3:20
+            </div>
+          </div>
+          <div class="options">
+            <button class="option-btn" onclick="acceptJesus()">
+              <i class="fas fa-heart"></i> SIM! Aceito Jesus!
+            </button>
+            <button class="option-btn no" onclick="showRespect()">
+              <i class="fas fa-clock"></i> Preciso pensar mais
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 9: Parabéns -->
+        <div class="card hidden" id="card9">
+          <div class="congratulations">
+            <span class="icon">🎉</span>
+            <h2>Parabéns, <span class="user-name"></span>!</h2>
+            <p>
+              Você acaba de tomar a decisão mais importante da sua vida! Jesus
+              agora está em seu coração e você é uma nova criatura!
+            </p>
+            <div class="verse">
+              "Assim que, se alguém está em Cristo, nova criatura é; as coisas
+              velhas já passaram; eis que tudo se fez novo" - 2 Coríntios 5:17
+            </div>
+          </div>
+          <div class="options">
+            <button class="option-btn" onclick="nextCard(10)">
+              <i class="fas fa-arrow-right"></i> Continuar
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 10: Telefone -->
+        <div class="card hidden" id="card10">
+          <div class="question">
+            <h2>📞 <span class="user-name"></span>, uma última coisa...</h2>
+            <p>Gostaríamos muito de te acompanhar nesta nova jornada!</p>
+            <p>
+              Você gostaria de compartilhar seu WhatsApp para recebermos
+              materiais de crescimento espiritual?
+            </p>
+          </div>
+          <div class="input-group phone-optional">
+            <label for="phone">
+              <i class="fas fa-mobile-alt"></i> Seu WhatsApp (opcional)
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              placeholder="(11) 9.9999-9999"
+              onkeypress="return isNumberKey(event)"
+              onkeyup="formatPhoneNumber(this)"
+            />
+            <div class="phone-note">
+              * Opcional - Apenas para envio de conteúdo espiritual
+            </div>
+          </div>
+          <div class="options">
+            <button class="option-btn" onclick="finalizePage()">
+              <i class="fas fa-check"></i> Compartilhar WhatsApp
+            </button>
+            <button class="option-btn" onclick="skipPhone()">
+              <i class="fas fa-forward"></i> Pular esta etapa
+            </button>
+          </div>
+        </div>
+
+        <!-- Card Final -->
+        <div class="card hidden" id="card-final">
+          <div class="congratulations">
+            <span class="icon">✨</span>
+            <h2>Bem-vindo à família, <span class="user-name"></span>! 🎉</h2>
+            <p>
+              Sua nova vida em Cristo começou! Que este seja apenas o início de
+              uma jornada incrível!
+            </p>
+          </div>
+
+          <div class="next-steps">
+            <h3>🌱 Próximos passos</h3>
+            <ul>
+              <li>Leia a Bíblia diariamente</li>
+              <li>Ore e converse com Deus</li>
+              <li>Procure uma igreja local</li>
+              <li>Compartilhe sua fé</li>
+              <li>Viva no amor de Cristo</li>
+            </ul>
+          </div>
+
+          <!-- Seção de Compartilhamento -->
+          <div class="share-section">
+            <h3>📢 Ajude outras pessoas!</h3>
+            <p>Compartilhe esta experiência e alcance mais vidas para Jesus:</p>
+
+            <div class="share-buttons">
+              <button class="share-btn whatsapp" onclick="shareWhatsApp()">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+              </button>
+              <button class="share-btn instagram" onclick="shareInstagram()">
+                <i class="fab fa-instagram"></i> Instagram
+              </button>
+              <button class="share-btn facebook" onclick="shareFacebook()">
+                <i class="fab fa-facebook"></i> Facebook
+              </button>
+              <button class="share-btn copy" onclick="copyLink()">
+                <i class="fas fa-link"></i> Copiar Link
+              </button>
+            </div>
+          </div>
+
+          <div class="options">
+            <button class="option-btn" onclick="restartJourney()">
+              <i class="fas fa-redo"></i> Recomeçar jornada
+            </button>
+          </div>
+        </div>
+
+        <!-- Card de Respeito -->
+        <div class="card hidden" id="respect">
+          <div class="question">
+            <h2>🙏 Respeitamos sua decisão, <span class="user-name"></span></h2>
+            <p>
+              Não há problema em precisar de mais tempo para refletir. Esta é
+              uma decisão muito importante e pessoal.
+            </p>
+            <p>
+              Saiba que Deus te ama incondicionalmente e estará sempre esperando
+              você de braços abertos. ❤️
+            </p>
+            <div class="verse">
+              "O Senhor é compassivo e misericordioso, lento para se irar e
+              grande em amor" - Salmos 103:8
+            </div>
+          </div>
+          <div class="options">
+            <button class="option-btn" onclick="restartJourney()">
+              <i class="fas fa-redo"></i> Recomeçar conversa
+            </button>
+            <button class="option-btn" onclick="nextCard(8)">
+              <i class="fas fa-arrow-left"></i> Voltar à decisão
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- JavaScript Modules -->
+    <script src="js/config.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/journey.js"></script>
+    <script src="js/phone.js"></script>
+    <script src="js/share.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
